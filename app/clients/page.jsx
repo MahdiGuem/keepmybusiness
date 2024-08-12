@@ -174,7 +174,7 @@ export default function ClientTable() {
                 <td className="client_cell">{client.businessEmail}</td>
                 <td className="client_cell">{client.about}</td>
                 <td className="client_cell text-center">
-                  <button onClick={() => handleEdit(client)} className="text-blue-500 hover:underline mr-2">Edit</button>
+                  <button onClick={() => handleEdit(client)} className="text-primary-green hover:underline mr-2">Edit</button>
                   <button onClick={() => handleDelete(client.clientID)} className="text-red-500 hover:underline">Delete</button>
                 </td>
               </tr>
@@ -186,7 +186,7 @@ export default function ClientTable() {
       <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-200 flex justify-center items-center">
         <button
           onClick={handlePreviousPage}
-          className="px-4 py-2 bg-blue-500 text-white rounded mr-2 disabled:opacity-50"
+          className="px-4 py-2 bg-gray-500 text-white rounded mr-2 disabled:opacity-50"
           disabled={currentPage === 1}
         >
           Previous
@@ -196,7 +196,7 @@ export default function ClientTable() {
         </span>
         <button
           onClick={handleNextPage}
-          className="px-4 py-2 bg-blue-500 text-white rounded ml-2 disabled:opacity-50"
+          className="px-4 py-2 bg-gray-500 text-white rounded ml-2 disabled:opacity-50"
           disabled={currentPage === totalPages}
         >
           Next
@@ -254,10 +254,10 @@ export default function ClientTable() {
                 required
               ></textarea>
               <div className="flex justify-end space-x-4 mt-4">
-                <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded">
+                <button type="submit" className="green_btn">
                   {editClient ? 'Update Client' : 'Add Client'}
                 </button>
-                <button type="button" onClick={handleCancel} className="px-4 py-2 bg-gray-500 text-white rounded">
+                <button type="button" onClick={handleCancel} className="outline_btn">
                   Cancel
                 </button>
               </div>
@@ -267,7 +267,7 @@ export default function ClientTable() {
       )}
 
       {modalVisible && (
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
+        <div onClick={cancelDelete} className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
           <div className="bg-white p-4 rounded-lg shadow-lg max-w-sm w-full">
             <h3 className="text-lg font-bold mb-4">Confirm Delete</h3>
             <p>Are you sure you want to delete this client?</p>
@@ -280,7 +280,7 @@ export default function ClientTable() {
               </button>
               <button
                 onClick={cancelDelete}
-                className="px-4 py-2 bg-gray-500 text-white rounded"
+                className="outline_btn"
               >
                 Cancel
               </button>

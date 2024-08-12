@@ -14,8 +14,9 @@
   @apply rounded-full bg-primary-green py-1.5 px-5 text-white transition-all hover:bg-green-300 hover:text-black text-center text-sm font-inter flex items-center justify-center;
 }
 
+
 .outline_btn {
-  @apply rounded-full border border-black bg-transparent py-1.5 px-5 text-black transition-all hover:bg-black hover:text-white text-center text-sm font-inter flex items-center justify-center;
+  @apply border border-black py-1.5 px-5 text-black transition-all hover:bg-black hover:text-white text-center text-sm font-inter flex items-center justify-center rounded-full;
 }
 
 .head_text {
