@@ -34,7 +34,7 @@ const Nav = () => {
   </svg>
   
     const accountName = "ADMIN001"
-    const isUserLoggedIn = false
+    const isUserLoggedIn = true
   return (
     <nav className="nav bg-white ">
         <div className = "flex">
@@ -52,17 +52,17 @@ const Nav = () => {
                 {isUserLoggedIn ? (
                     <div className="flex gap-3 items-center">
                         <p>|</p>
-                        <Link href="/requests" className="flex">
+                        <Link href="/admin/requests" className="flex">
                         {request_icon}
                         <p className="sm:flex hidden">Requests</p>
                         </Link>
                         <p>|</p>
-                        <Link href="/clients" className="flex">
+                        <Link href="/admin/clients" className="flex">
                             {clients_icon}
                             <p className="sm:flex hidden">Clients</p>
                         </Link>
                         <p>|</p>
-                        <Link href="/clients" className="flex">
+                        <Link href="/admin/edit" className="flex">
                             {edit_icon}
                             <p className="sm:flex hidden">Edit</p>
                         </Link>

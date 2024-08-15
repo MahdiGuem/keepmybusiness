@@ -1,8 +1,8 @@
 import Image from 'next/image';
 
-const Contact = () => {
+const Contact = (props) => {
   return (
-    <div className="w-full flex justify-center marker gap-5">
+    <div className="w-full flex justify-center marker gap-5" id={props.id}>
         <div className='bg_image w-1/3 h-screen'/>
 
         <div className="flex flex-col w-2/3 gap-3 sm:m-10 mt-5 justify-center">
