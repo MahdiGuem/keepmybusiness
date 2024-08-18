@@ -29,12 +29,12 @@ html{
 }
 
 .green_gradient {
-  @apply bg-gradient-to-r from-primary-green via-green-700 to-green-950 bg-clip-text text-transparent;
+  @apply bg-gradient-to-r from-primary-green via-green-700 to-green-950 bg-clip-text text-transparent p-3;
 }
 
 
 .desc {
-  @apply mt-5 text-lg text-gray-600 sm:text-xl max-w-2xl;
+  @apply text-lg text-gray-600 sm:text-xl p-2;
 }
 
 .search_input {
