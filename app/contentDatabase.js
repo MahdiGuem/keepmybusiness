@@ -37,11 +37,8 @@ const contentCards = [
         { productName: "Product 3", productIcon: "/icons/product3.svg", cardColor: "green-200" },
         { productName: "Product 4", productIcon: "/icons/product4.svg", cardColor: "yellow-200" },
         { productName: "Product 5", productIcon: "/icons/product4.svg", cardColor: "yellow-200" },
-        { productName: "Product 1", productIcon: "/icons/product1.svg", cardColor: "blue-200" },
-        { productName: "Product 2", productIcon: "/icons/product2.svg", cardColor: "red-200" },
-        { productName: "Product 3", productIcon: "/icons/product3.svg", cardColor: "green-200" },
-        { productName: "Product 4", productIcon: "/icons/product4.svg", cardColor: "yellow-200" },
-        { productName: "Product 5", productIcon: "/icons/product4.svg", cardColor: "yellow-200" },
+        { productName: "Product 6", productIcon: "/icons/product1.svg", cardColor: "blue-200" },
+        { productName: "Product 7", productIcon: "/icons/product2.svg", cardColor: "red-200" },
       ],
     },
   ];

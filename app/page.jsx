@@ -7,7 +7,7 @@ const Home = () => {
     return (
             <section className="w-full flex-center flex-col" id="about-section">
                     {contentCards.map((card, index) => (
-                        <ContentCard id={card.id} key={index} card={card} />
+                        <ContentCard id={card.id} key={index} card={card} mode='display' />
                     ))}
                 <Contact id="contact-section"/>
             </section> 

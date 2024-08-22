@@ -34,7 +34,7 @@ const Nav = () => {
   </svg>
   
     const accountName = "ADMIN001"
-    const isUserLoggedIn = false
+    const isUserLoggedIn = true
   return (
     <nav className="nav bg-white ">
         <div className = "flex">
@@ -100,7 +100,7 @@ const Nav = () => {
         {isUserLoggedIn ? (
             <div className="flex items-center gap-1">
                 <p>{accountName}</p>
-                <button type="button" onClick="" className="green_btn">
+                <button type="button" onClick={()=>{}} className="green_btn">
                     Sign Out
                 </button>
             
