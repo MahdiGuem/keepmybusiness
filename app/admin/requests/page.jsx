@@ -37,7 +37,7 @@ export default function RequestsTable({ clients, setClients }) {
   };
 
   return (
-    <div className="p-4 max-w-5xl mx-auto flex flex-col min-h-screen">
+    <div className="p-4 max-w-5xl mx-auto flex flex-col h-full">
       <h2 className="text-2xl font-bold mb-4">Client Requests</h2>
 
       <div className="flex-1 overflow-x-auto">

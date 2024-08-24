@@ -6,10 +6,37 @@ import ContentCard from '@components/ContentCards/ContentCard';
 import ContentCardEdit from '@components/ContentCardEdit';
 
 const initialContentCards = contentCards;
-
-const Page = () => {
+const defaultCards = {
+  'TextCard': {
+    cardId: contentCards.length + 1,
+    cardType: 'TextCard',
+    id: `new-section-${contentCards.length + 1}`,
+    titles: [
+      { size: 'head_text', color: 'green_gradient', text: 'Place Holder Title', alignment: 'left' },
+      { size: 'desc', color: 'text-black', text: 'Place Holder description!', alignment: 'left' },
+    ],
+    background: 'bg-white',
+  },
+  'VideoCard':     {
+    cardId: 3,
+    cardType: 'VideoCard',
+    id: `new-section-${contentCards.length + 1}`,
+    videoID: 'c9HfNg4a_Og?si=Knmerx93u7xEINAB',
+    background: 'bg-white',
+  },
+  'ProductsCard': {
+    cardID: 4,
+    cardType: 'ProductsCard',
+    id: `new-section-${contentCards.length + 1}`,
+    products:[
+      { productName: "Product 1", productIcon: "/icons/product1.svg", cardColor: "blue-200" },
+    ],
+  },
+}
+export default function Edit() {
   const [contentCards, setContentCards] = useState([]);
   const [selectedCard, setSelectedCard] = useState({});
+  const [addMenuVisible, setAddMenuVisible] = useState(false);
 
   useEffect(() => {
     setContentCards(initialContentCards);
@@ -22,7 +49,6 @@ const Page = () => {
     const newCards = [...contentCards];
     const targetIndex = direction === 'up' ? index - 1 : index + 1;
 
-    // Swap the cards
     [newCards[index], newCards[targetIndex]] = [newCards[targetIndex], newCards[index]];
     setContentCards(newCards);
   };
@@ -32,59 +58,77 @@ const Page = () => {
       const newCards = contentCards.filter((_, i) => i !== index);
       setContentCards(newCards);
 
-      // Update selected card if it's the one being deleted
       if (selectedCard === contentCards[index]) {
         setSelectedCard(newCards.length > 0 ? newCards[0] : {});
       }
     }
   };
 
-  const addCard = () => {
-    const newCard = {
-      cardId: contentCards.length + 1,
-      cardType: 'TextCard',  // Default card type, can be adjusted
-      id: `new-section-${contentCards.length + 1}`,
-      titles: [
-        { size: 'head_text', color: 'text-black', text: 'New Card Title', alignment: 'center' },
-      ],
-      background: 'bg-gray-100',
-    };
+  const addCard = (cardType) => {
+    const newCard = defaultCards[cardType]
 
     setContentCards([...contentCards, newCard]);
-    setSelectedCard(newCard);  // Automatically select the new card
+    setSelectedCard(newCard); 
+    setAddMenuVisible(false);
   };
+
+  const openAddMenu = () => {
+    setAddMenuVisible(!addMenuVisible);
+  };
+
+  const  openBackgroundColorMenu = () => {
+
+  }
 
   return (
     <div className='flex flex-row p-4 w-full h-full gap-2'>
-      <div className="flex flex-col bg-slate-300 min-w-36 rounded-16 p-2 h-fill gap-2">
-        {contentCards.map((card, index) => (
-          <ContentCardEdit 
-            key={index} 
-            card={card} 
-            setSelectedCard={setSelectedCard} 
-            moveCard={moveCard} 
-            deleteCard={() => deleteCard(index)} 
-            index={index} 
-            totalCards={contentCards.length} // Pass the length of the array
-          />
-        ))}
-        <div 
-          className='flex align-middle justify-center green_btn cursor-pointer'
-          onClick={addCard}  // Add this line to trigger addCard function
-        >
-          +
+      <div>
+        <div className="flex flex-col bg-slate-300 w-36 flex-none rounded-16 p-2 h-5/6 gap-2 overflow-y-auto">
+          {contentCards.map((card, index) => (
+            <ContentCardEdit 
+              key={index} 
+              card={card} 
+              setSelectedCard={setSelectedCard} 
+              moveCard={moveCard} 
+              deleteCard={() => deleteCard(index)} 
+              index={index} 
+              totalCards={contentCards.length} 
+            />
+          ))}
+
+        </div>
+        
+        <div className="flex flex-col bg-slate-300 w-36 flex-none rounded-16 p-2 h-fit mt-2 gap-2 overflow-y-auto">
+          <button 
+              className='flex align-middle justify-center green_btn cursor-pointer' 
+              onClick={openAddMenu}
+            >
+              +
+            </button>
+            {addMenuVisible && 
+              <div className='flex flex-row justify-between'>
+                <button className='align-middle justify-center green_btn cursor-pointer w-1/4 aspect-square '
+                  onClick={() => addCard('TextCard')}>
+                  T
+                </button>
+                <button className='align-middle justify-center green_btn cursor-pointer w-1/4 aspect-square'
+                  onClick={() => addCard('VideoCard')}>
+                  V
+                </button>
+                <button className='align-middle justify-center green_btn cursor-pointer w-1/4 aspect-square'
+                  onClick={() => addCard('ProductsCard')}>
+                  P
+                </button>
+            </div>
+          }
+
         </div>
       </div>
-
-      <div className="flex flex-col bg-slate-300 min-w-40 rounded-16 p-2 w-full h-fill">
+      <div className="relative flex flex-col bg-slate-300 min-w-40 rounded-16 p-2 w-full h-full">
         {selectedCard && selectedCard.cardType && (
-          <div>
-            <ContentCard id={selectedCard.id} card={selectedCard} mode='edit' />
-          </div>
+          <ContentCard id={selectedCard.id} card={selectedCard} mode='edit' />
         )}
       </div>
     </div>
   );
-};
-
-export default Page;
+}

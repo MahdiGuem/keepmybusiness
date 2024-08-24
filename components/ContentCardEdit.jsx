@@ -5,9 +5,9 @@ const ContentCardEdit = ({ card, setSelectedCard, moveCard, deleteCard, index, t
   const [selected, setSelected] = useState(false);
 
   return (
-    <div className='flex justify-center flex-col shadow rounded-lg overflow-hidden'>
+    <div className='flex justify-center flex-col shadow rounded-lg overflow-hidden min-h-20'>
       <div
-        className='flex align-middle justify-center p-4 bg-white rounded-t-lg shadow cursor-pointer'
+        className='flex align-middle justify-center p-2 bg-white rounded-t-lg shadow cursor-pointer'
         onClick={() => {
           setSelected(true);
           setSelectedCard(card);
@@ -18,13 +18,13 @@ const ContentCardEdit = ({ card, setSelectedCard, moveCard, deleteCard, index, t
       
       <div className='flex flex-row justify-between'>
         
-        <button className='edit_btn' onClick={() => moveCard(index, 'up')} disabled={index === 0}>
+        <button className='edit_btn w-1/3' onClick={() => moveCard(index, 'up')} disabled={index === 0}>
           ↑
         </button>
-        <button className='edit_btn' onClick={() => moveCard(index, 'down')} disabled={index === totalCards - 1}>
+        <button className='edit_btn w-1/3' onClick={() => moveCard(index, 'down')} disabled={index === totalCards - 1}>
           ↓
         </button>
-        <button className='edit_btn' onClick={deleteCard}>
+        <button className='edit_btn w-1/3' onClick={deleteCard}>
           X
         </button>
       </div>

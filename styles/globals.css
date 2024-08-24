@@ -21,8 +21,9 @@ html{
 }
 
 .edit_btn{
-  @apply bg-primary-green w-1/3 aspect-square text-white transition-all hover:bg-green-300 hover:text-black text-center text-sm font-inter flex items-center justify-center;
+  @apply bg-primary-green aspect-square h-full text-white transition-all hover:bg-green-300 hover:text-black text-center text-sm font-inter flex items-center justify-center;
 }
+
 .outline_btn {
   @apply border border-black py-1.5 px-5 text-black transition-all hover:bg-black hover:text-white text-center text-sm font-inter flex items-center justify-center rounded-full;
 }
@@ -80,10 +81,7 @@ html{
 /* Nav Component */
 
 .nav {
-  position: sticky;
-  z-index: 20;
-  top: 0rem;
-  @apply flex flex-between w-full mb-4 shadow-md shadow-lg p-2 bg-white;
+  @apply top-0 z-20 absolute flex flex-between w-full shadow-lg p-2 bg-white h-12;
 }
 
 /* PromptCard Component */

@@ -5,12 +5,12 @@ import contentCards from './contentDatabase';
 const Home = () => {
     const videoId = 'c9HfNg4a_Og?si=Knmerx93u7xEINAB'
     return (
-            <section className="w-full flex-center flex-col" id="about-section">
+            <div className=" w-full flex-col" id="about-section">
                     {contentCards.map((card, index) => (
                         <ContentCard id={card.id} key={index} card={card} mode='display' />
                     ))}
                 <Contact id="contact-section"/>
-            </section> 
+            </div> 
     )
 }
 

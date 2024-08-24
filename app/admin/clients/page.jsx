@@ -137,7 +137,7 @@ export default function ClientTable() {
   };
 
   return (
-    <div className="p-4 max-w-5xl mx-auto flex flex-col min-h-screen">
+    <div className="p-4 max-w-5xl mx-auto flex flex-col min-h-full">
         <div className='flex flex-between'>
             <h2 className="text-2xl font-bold mb-4">Client List</h2>
             

@@ -36,7 +36,7 @@ const Nav = () => {
     const accountName = "ADMIN001"
     const isUserLoggedIn = true
   return (
-    <nav className="nav bg-white ">
+    <nav className="nav bg-white">
         <div className = "flex">
             <Link href="/" className="flex gap-2 flex-center pr-2">
                 <Image 

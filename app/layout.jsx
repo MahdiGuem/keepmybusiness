@@ -9,12 +9,11 @@ const RootLayout = ({ children }) => {
   return (
     <html lang="en">
         <body>
-            <div className="">
-                <div></div>
-            </div>
             <main className='app'>
                 <Nav/>
-                {children}
+                <div className='h-full pt-12'>
+                    {children}
+                </div>
             </main>
         </body>
     </html>  
