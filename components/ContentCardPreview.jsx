@@ -1,15 +1,13 @@
 'use client';
 import { useState } from 'react';
 
-const ContentCardEdit = ({ card, setSelectedCard, moveCard, deleteCard, index, totalCards }) => {
-  const [selected, setSelected] = useState(false);
+const ContentCardPreview = ({ card, selected, setSelectedCard, moveCard, deleteCard, index, totalCards }) => {
 
   return (
-    <div className='flex justify-center flex-col shadow rounded-lg overflow-hidden min-h-20'>
+    <div className={`flex justify-center flex-col shadow rounded-lg overflow-hidden min-h-20 border-2 ${selected ? 'border-primary-green' : 'border-transparent'}`}>
       <div
-        className='flex align-middle justify-center p-2 bg-white rounded-t-lg shadow cursor-pointer'
+        className={`flex align-middle justify-center p-2 bg-white rounded-t-lg shadow cursor-pointer ${selected && 'underline text-primary-green'}`}
         onClick={() => {
-          setSelected(true);
           setSelectedCard(card);
         }}
       >
@@ -32,4 +30,4 @@ const ContentCardEdit = ({ card, setSelectedCard, moveCard, deleteCard, index, t
   );
 };
 
-export default ContentCardEdit;
+export default ContentCardPreview;
