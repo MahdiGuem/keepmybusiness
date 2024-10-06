@@ -12,7 +12,11 @@ export default function RequestsTable() {
   // Fetch requests from backend
   const fetchRequests = async () => {
     try {
-      const res = await fetch('http://localhost:8080/request');
+      const res = await fetch('http://localhost:8080/request',{
+        headers:{ 
+        "Authorization": "Bearer " + localStorage.getItem("token")
+        }
+      });
       const data = await res.json();
       setRequests(data);
     } catch (error) {
@@ -53,15 +57,19 @@ export default function RequestsTable() {
 
   const handleDelete = async (requestId) => {
     try {
-      await fetch(`http://localhost:8080/request/delete/${requestId}`, { method: 'DELETE' });
+       const res = await fetch(`http://localhost:8080/request/delete/${requestId}`,{ 
+        headers: {"Authorization": "Bearer " + localStorage.getItem("token")},
+        method: 'DELETE' 
+      });
       setRequests(requests.filter(request => request.id !== requestId));
     } catch (error) {
       console.error('Error deleting request:', error);
+
     }
   };
 
   return (
-    <div className="p-4 max-w-5xl mx-auto flex flex-col h-full">
+    <div className="p-4 w-full mx-auto flex flex-col h-full">
       <h2 className="text-2xl font-bold mb-4">Client Requests</h2>
       {isLoading ? (
         <div className="flex justify-center items-center">

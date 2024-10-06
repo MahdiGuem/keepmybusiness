@@ -53,6 +53,7 @@ export default function Edit() {
         const res = await fetch(`http://localhost:8080/content`, {
           headers: {
             'Content-Type': 'application/json',
+            "Authorization": "Bearer " + localStorage.getItem("token")
           },
           method: 'POST',
           body: JSON.stringify(contentCards),
@@ -67,7 +68,11 @@ export default function Edit() {
 
   const fetchContent = async () => {
     try {
-      const res = await fetch('http://localhost:8080/content');
+      const res = await fetch('http://localhost:8080/content/all', {
+        headers: {
+          "Authorization": "Bearer " + localStorage.getItem("token")
+        }
+      });
       const data = await res.json();
       setContentCards(data);
       setChangesSaved(true);
@@ -115,6 +120,7 @@ export default function Edit() {
       await fetch(`http://localhost:8080/content/new`, {
         headers: {
           'Content-Type': 'application/json',
+          "Authorization": "Bearer " + localStorage.getItem("token")
         },
         method: 'POST',
         body: JSON.stringify(newCard)

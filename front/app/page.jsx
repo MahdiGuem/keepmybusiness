@@ -25,7 +25,7 @@ const Home = () => {
 
   const fetchContent = async () => {
     try {
-      const res = await fetch('http://localhost:8080/content');
+      const res = await fetch('http://localhost:8080/content/all');
       const data = await res.json();
       setContentCards(data);
     } catch (error) {

@@ -95,6 +95,9 @@ const handleDelete = (id) => {
 const confirmDelete = async () => {
   try {
     await fetch(`http://localhost:8080/client/delete/${clientToDelete}`, {
+      headers: {
+        "Authorization": "Bearer " + localStorage.getItem("token")
+      },
       method: 'DELETE'
     });
     setClients(clients.filter(client => client.id !== clientToDelete));
@@ -121,6 +124,7 @@ const handleEditSubmit = async (e) => {
     await fetch(`http://localhost:8080/client`, {
       headers: {
         'Content-Type': 'application/json',
+        "Authorization": "Bearer " + localStorage.getItem("token")
       },
       method: 'POST',
       body: JSON.stringify(formData),
@@ -187,6 +191,7 @@ const handleCancel = () => {
                   <th className="client_header" onClick={() => handleSort('birthdate')}>Birthdate</th>
                   <th className="client_header" onClick={() => handleSort('personalEmail')}>Personal Email</th>
                   <th className="client_header" onClick={() => handleSort('businessEmail')}>Business Email</th>
+                  <th className="client_header" onClick={() => handleSort('businessEmail')}>Password</th>
                   <th className="client_header">About</th>
                   <th className="client_header">Actions</th>
                 </tr>
@@ -199,6 +204,7 @@ const handleCancel = () => {
                     <td className="client_cell">{client.birthdate}</td>
                     <td className="client_cell">{client.personalEmail}</td>
                     <td className="client_cell">{client.businessEmail}</td>
+                    <td className="client_cell">{client.password}</td>
                     <td className="client_cell">{client.about}</td>
                     <td className="client_cell text-center">
                       <button onClick={() => handleEdit(client)} className="text-primary-green hover:underline mr-2">Edit</button>

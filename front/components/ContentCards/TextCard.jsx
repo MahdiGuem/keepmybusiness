@@ -15,6 +15,15 @@ const alignment_icons = {
   </svg>
 }
 
+const save_icons ={
+  true: <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+  <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+</svg>,
+  false:<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+  <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+</svg>
+}
+
 export default function TextCard({ card, mode, updateCard, changesSaved, saveContent}) {
   const [bg, setBg] = useState(card.background);
   const [bgMenuVisible, setBgMenuVisible] = useState(false);
@@ -146,8 +155,11 @@ export default function TextCard({ card, mode, updateCard, changesSaved, saveCon
         </div>
       ) : (
         <div className={`relative w-full h-screen flex-center flex-col ${bg} overflow-scroll`}>
-          <button className={`absolute top-0 left-0 mr-2 z-5 flex justify-center flex-row rounded-br-lg overflow-hidden h-10 w-12 aspect-square border-2 border-slate-300 ${changesSaved ? 'bg-green-300' : 'bg-red-400'}`} 
-          onClick={() => saveContent()} />
+          <button className={`absolute top-0 pt-2 left-0 mr-2 z-5 flex justify-center flex-row rounded-br-lg overflow-hidden h-10 w-full aspect-square border-2 border-slate-300 ${changesSaved ? 'bg-green-300' : 'bg-red-400'}`} 
+          onClick={() => saveContent()} > 
+            {save_icons[changesSaved]}
+            {changesSaved? ' Changes saved': ' Click here to save your changes!'}
+          </button>
           <EditMenu
             menuType="corner"
             menuButtons={['BG', 'add', 'T0', 'T1', 't']}

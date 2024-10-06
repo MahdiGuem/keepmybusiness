@@ -1,5 +1,6 @@
 'use server';
 
+
 export const handleRequestApprove = async (requestId) => {
   try {
     const response = await fetch(`http://localhost:8080/request`, {
@@ -20,3 +21,4 @@ export const handleRequestApprove = async (requestId) => {
     console.error('Error approving request:', error);
   }
 };
+
