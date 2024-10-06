@@ -37,27 +37,29 @@ const Nav = () => {
     <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
   </svg>
   
-    const[accountName,setAccountName] = useState("")
+    const[email,setEmail] = useState("")
     const[isUserLoggedIn,setIsUserLoggedIn] = useState(false)
     const[token, setToken] = useState("")
     const router = useRouter();
 
     useEffect(() => {
         const storedToken = localStorage.getItem('token');
+        const storedEmail = localStorage.getItem('email');
+        console.log(storedToken)
         if (storedToken) {
             setToken(storedToken);
+            setEmail(storedEmail);
             setIsUserLoggedIn(true);
-            setAccountName("admin");
         } else {
             setIsUserLoggedIn(false);
         }
     }, []);
 
     const logout = () => {
-        
         localStorage.removeItem('token')
+        localStorage.removeItem('email')
         setIsUserLoggedIn(false)
-        setAccountName('')
+        setEmail('')
         router.push("/")
     }
   return (
@@ -124,7 +126,7 @@ const Nav = () => {
         </div>
         {isUserLoggedIn ? (
             <div className="flex items-center gap-1">
-                <p>{accountName}</p>
+                <p>{email}</p>
                 <button type="button" onClick={()=>{logout()}} className="green_btn">
                     Sign Out
                 </button>

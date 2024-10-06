@@ -22,12 +22,12 @@ export default function RequestsTable() {
     } catch (error) {
       console.error('Error fetching requests:', error);
     } finally {
-      setIsLoading(false); // Stop loading after fetch is done
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchRequests(); // Fetch data on component mount
+    fetchRequests();
   }, []);
 
   // Update current page requests whenever requests or currentPage changes
