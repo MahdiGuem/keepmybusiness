@@ -1,7 +1,6 @@
 package com.iware.kmb.controller;
 
 import com.iware.kmb.dto.RequestUpdate;
-import com.iware.kmb.entity.Client;
 import com.iware.kmb.entity.Request;
 import com.iware.kmb.service.RequestService;
 import org.springframework.beans.factory.annotation.Autowired;
