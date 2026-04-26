@@ -15,9 +15,9 @@ const Home = () => {
     case 'TextCard':
       return <TextCard card={card} mode={mode}/>;
     case 'VideoCard':
-      return <VideoCard {...card} mode={mode}/>;
+      return <VideoCard videoID={card.videoId} background={card.background} mode={mode}/>;
     case 'ProductsCard':
-      return <ProductsCard {...card} mode={mode}/>;
+      return <ProductsCard products={card.products} mode={mode}/>;
     default:
       return null;
   }
@@ -27,6 +27,7 @@ const Home = () => {
     try {
       const res = await fetch('http://localhost:8080/content/all');
       const data = await res.json();
+      console.log('Landing page fetchContent data:', JSON.stringify(data, null, 2));
       setContentCards(data);
     } catch (error) {
       console.error('Error fetching content:', error);

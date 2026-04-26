@@ -42,10 +42,9 @@ const Nav = () => {
     const[token, setToken] = useState("")
     const router = useRouter();
 
-    useEffect(() => {
+    const checkAuth = () => {
         const storedToken = localStorage.getItem('token');
         const storedEmail = localStorage.getItem('email');
-        console.log(storedToken)
         if (storedToken) {
             setToken(storedToken);
             setEmail(storedEmail);
@@ -53,13 +52,30 @@ const Nav = () => {
         } else {
             setIsUserLoggedIn(false);
         }
+    };
+
+    useEffect(() => {
+        checkAuth();
+
+        window.addEventListener('storage', checkAuth);
+        window.addEventListener('auth-change', checkAuth);
+        
+        return () => {
+            window.removeEventListener('storage', checkAuth);
+            window.removeEventListener('auth-change', checkAuth);
+        };
     }, []);
+
+    useEffect(() => {
+        checkAuth();
+    }, [router.asPath]);
 
     const logout = () => {
         localStorage.removeItem('token')
         localStorage.removeItem('email')
         setIsUserLoggedIn(false)
         setEmail('')
+        window.dispatchEvent(new Event('auth-change'));
         router.push("/")
     }
   return (

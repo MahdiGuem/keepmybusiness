@@ -26,6 +26,7 @@ const Login = () => {
             localStorage.setItem('token', token);
             localStorage.setItem('email',email)
             console.log(token);
+            window.dispatchEvent(new Event('auth-change'));
             router.refresh()
             router.push("requests")
         }

@@ -1,6 +1,5 @@
 'use client';
 
-import { handleRequestApprove } from '@app/actions';
 import { useState, useEffect } from 'react';
 
 export default function RequestsTable() {
@@ -48,8 +47,38 @@ export default function RequestsTable() {
 
   const handleApprove = async (requestId) => {
     try {
-      await handleRequestApprove(requestId);
-      setRequests(requests.filter(request => request.id !== requestId));
+      console.log('1. Approving request:', requestId);
+      
+      const res = await fetch(`http://localhost:8080/request`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
+        body: JSON.stringify({
+          requestId: requestId,
+          newStatus: 'approved',
+        })
+      });
+      
+      console.log('2. Response status:', res.status);
+      
+      if (!res.ok) {
+        throw new Error('Failed to approve request');
+      }
+      
+      const data = await res.json();
+      console.log('3. Response data:', data);
+      
+      // Remove from local state
+      const updatedRequests = requests.filter(request => request.id !== requestId);
+      console.log('4. Updated requests:', updatedRequests.length);
+      setRequests(updatedRequests);
+      
+      // Re-fetch requests
+      console.log('5. Re-fetching requests...');
+      await fetchRequests();
+      console.log('6. Done');
     } catch (error) {
       console.error('Error approving request:', error);
     }
@@ -70,7 +99,14 @@ export default function RequestsTable() {
 
   return (
     <div className="p-4 w-full mx-auto flex flex-col h-full">
-      <h2 className="text-2xl font-bold mb-4">Client Requests</h2>
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-2xl font-bold">Client Requests</h2>
+        <button onClick={fetchRequests} className="text-primary-green">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+          </svg>
+        </button>
+      </div>
       {isLoading ? (
         <div className="flex justify-center items-center">
         {/* Loading Spinner */}

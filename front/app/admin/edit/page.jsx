@@ -11,19 +11,19 @@ const defaultCards = {
     cardType: 'TextCard',
     titles: [
       { size: 'head_text', color: 'green_gradient', text: 'Place Holder Title', alignment: 'left' },
-      { size: 'desc', color: 'text-black', text: 'Place Holder description!', alignment: 'left' },
+      { size: 'desc', color: '#000000', text: 'Place Holder description!', alignment: 'left' },
     ],
-    background: 'bg-white',
+    background: '#FFFFFF',
   },
   'VideoCard': {
     cardType: 'VideoCard',
-    videoID: 'c9HfNg4a_Og?si=Knmerx93u7xEINAB',
-    background: 'bg-white',
+    videoID: 'dQw4w9WgXcQ',
+    background: '#FFFFFF',
   },
   'ProductsCard': {
     cardType: 'ProductsCard',
     products: [
-      { productName: "Product 1", productIcon: "/icons/product1.svg", cardColor: "blue-200" },
+      { productName: "Product 1", productIcon: "", bgColor: "#3B82F6", background: "#FFFFFF" },
     ],
   },
 };
@@ -40,25 +40,45 @@ export default function Edit() {
       case 'TextCard':
         return <TextCard card={card} mode={mode} updateCard={updateCard} saveContent={saveContent} changesSaved={changesSaved}/>;
       case 'VideoCard':
-        return <VideoCard {...card} mode={mode} />;
+        return <VideoCard videoID={card.videoId} background={card.background} mode={mode} updateCard={updateCard} cardId={card.id} saveContent={saveContent} changesSaved={changesSaved}/>;
       case 'ProductsCard':
-        return <ProductsCard {...card} mode={mode} />;
+        return <ProductsCard products={card.products} mode={mode} updateCard={updateCard} cardId={card.id} saveContent={saveContent} changesSaved={changesSaved} background={card.background}/>;
       default:
         return null;
     }
   };
 
   const saveContent = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.error('No token found. Please log in first at /admin/login');
+        alert('Please log in first! Redirecting to login...');
+        window.location.href = '/admin/login';
+        return;
+      }
+      console.log('saveContent contentCards:', JSON.stringify(contentCards, null, 2));
       try {
         const res = await fetch(`http://localhost:8080/content`, {
           headers: {
             'Content-Type': 'application/json',
-            "Authorization": "Bearer " + localStorage.getItem("token")
+            "Authorization": "Bearer " + token
           },
           method: 'POST',
           body: JSON.stringify(contentCards),
         });
+        console.log('saveContent response status:', res.status);
+        if (!res.ok) {
+          if (res.status === 403) {
+            console.error('Unauthorized. Token may be expired.');
+            alert('Session expired. Please log in again.');
+            localStorage.removeItem("token");
+            window.location.href = '/admin/login';
+            return;
+          }
+          throw new Error(`HTTP ${res.status}`);
+        }
         const data = await res.json();
+        console.log('saveContent response data:', data);
         setContentCards(data);
         setChangesSaved(true);
       } catch (error) {
@@ -74,6 +94,7 @@ export default function Edit() {
         }
       });
       const data = await res.json();
+      console.log('fetchContent data:', JSON.stringify(data, null, 2));
       setContentCards(data);
       setChangesSaved(true);
       if (data.length > 0 && !selectedCard) {
@@ -96,7 +117,7 @@ export default function Edit() {
 
     if (targetIndex >= 0 && targetIndex < newCards.length) {
       [newCards[index], newCards[targetIndex]] = [newCards[targetIndex], newCards[index]];
-      setContentCards(newCards)
+      setContentCards(newCards);
       setChangesSaved(false);
     }
   };
@@ -108,7 +129,7 @@ export default function Edit() {
       if (selectedCard && selectedCard.id === contentCards[index].id) {
         setSelectedCard(newCards.length > 0 ? newCards[0] : null);
       }
-      setContentCards(newCards)
+      setContentCards(newCards);
       setChangesSaved(false);
     }
   };
@@ -134,8 +155,7 @@ export default function Edit() {
 
   const updateCard = async (cardId, updatedCard) => {
     const newCards = contentCards.map((card) => (card.id === cardId ? { ...card, ...updatedCard } : card));
-    setSelectedCard(updatedCard);
-    setContentCards(newCards)
+    setContentCards(newCards);
     setChangesSaved(false);
   };
 
@@ -153,7 +173,7 @@ export default function Edit() {
       );
 
       updatedCards[cardIndex] = { ...card, titles: updatedTitles };
-      setContentCards(newCards)
+      setContentCards(updatedCards);
       setChangesSaved(false);
     }
   };
@@ -164,7 +184,7 @@ export default function Edit() {
 
     if (card.cardType === 'TextCard') {
       updatedCards[cardIndex] = { ...card, background: newColor };
-      setContentCards(newCards)
+      setContentCards(updatedCards);
       setChangesSaved(false);
     }
   };

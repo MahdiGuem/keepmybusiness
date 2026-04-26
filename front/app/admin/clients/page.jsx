@@ -1,8 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function ClientTable() {
+  const router = useRouter();
   const [clients, setClients] = useState([]);
   const [loading, setLoading] = useState(true); // Loading state
   const [currentPage, setCurrentPage] = useState(1);
@@ -22,9 +24,28 @@ export default function ClientTable() {
   const [clientToDelete, setClientToDelete] = useState(null);
 
   const fetchClients = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      console.error('No token found. Please log in first.');
+      setLoading(false);
+      return;
+    }
     try {
-      const res = await fetch("http://localhost:8080/client", { cache: "no-cache" });
+      const res = await fetch("http://localhost:8080/client", {
+        cache: "no-cache",
+        headers: {
+          "Authorization": "Bearer " + token
+        }
+      });
+      if (!res.ok) {
+        if (res.status === 403) {
+          console.error('Unauthorized. Token may be expired.');
+          localStorage.removeItem("token");
+        }
+        throw new Error(`HTTP ${res.status}`);
+      }
       const data = await res.json();
+      console.log('Clients data:', data);
       setClients(data);
       setLoading(false);
     } catch (error) {
@@ -35,6 +56,16 @@ export default function ClientTable() {
 
   useEffect(() => {
     fetchClients();
+  }, []);
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        fetchClients();
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
   }, []);
 
   // Sorting
@@ -161,7 +192,14 @@ const handleCancel = () => {
   return (
     <div className="p-4 mx-auto flex flex-col min-h-full">
       <div className='flex justify-between mb-4'>
-        <h2 className="text-2xl font-bold">Client List</h2>
+        <div className="flex gap-2">
+          <h2 className="text-2xl font-bold">Client List</h2>
+          <button onClick={fetchClients} className="text-primary-green">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+            </svg>
+          </button>
+        </div>
         <input
           type="text"
           placeholder="Search..."
